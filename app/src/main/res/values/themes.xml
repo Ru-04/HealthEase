@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.HealthEase" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.HealthEase.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HealthEase.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.HealthEase.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

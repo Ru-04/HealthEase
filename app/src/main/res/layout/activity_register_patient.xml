@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Register_patient"
+    android:orientation="vertical"
+    android:background="@drawable/background">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HEALTHEASE"
+        android:fontFamily="@font/amita_regular"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="600dp"
+        android:orientation="vertical"
+        android:background="@drawable/smal_btn"
+        android:backgroundTint="#F0BBFD"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/user"
+        android:layout_gravity="center"
+        android:layout_marginTop="18dp"/>
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_edge20"
+            android:backgroundTint="@color/white"
+            android:text="Patient Number"
+            android:layout_marginTop="35dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/inter_variablefont"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/ph_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_edge20"
+            android:backgroundTint="@color/white"
+            android:text="contact number"
+            android:layout_marginTop="15dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/inter_variablefont"
+            android:layout_gravity="center"/>
+        <EditText
+            android:id="@+id/adhar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_edge20"
+            android:backgroundTint="@color/white"
+            android:text="Adhar Number"
+            android:layout_marginTop="15dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/inter_variablefont"
+            android:layout_gravity="center"/>
+        <EditText
+            android:id="@+id/dob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_edge20"
+            android:backgroundTint="@color/white"
+            android:text="DOB"
+            android:layout_marginTop="15dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/inter_variablefont"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_edge20"
+            android:backgroundTint="@color/white"
+            android:text="Gender"
+            android:layout_marginTop="15dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/inter_variablefont"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_edge20"
+            android:backgroundTint="@color/white"
+            android:text="email ID"
+            android:layout_marginTop="15dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/inter_variablefont"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/click2"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/smal_btn"
+            android:backgroundTint="#9EFFFFFF"
+            android:fontFamily="@font/inter_variablefont"
+            android:text="Sign Up"
+            android:layout_marginTop="30dp"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+</LinearLayout>
