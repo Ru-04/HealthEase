@@ -6,16 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
+
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:text="HEALTHEASE"
-        android:fontFamily="@font/amita_regular"
-        android:textColor="@color/black"
-        android:textSize="30dp"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="115dp"
         android:layout_marginTop="120dp"
-        android:layout_marginHorizontal="115dp"/>
+        android:fontFamily="@font/amita_regular"
+        android:text="HEALTHEASE"
+        android:textColor="@color/black"
+        android:textSize="30dp" />
 
     <Button
         android:id="@+id/sign_in"

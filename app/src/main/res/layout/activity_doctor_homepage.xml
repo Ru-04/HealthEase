@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/homed"
+    android:orientation="vertical"
+    tools:context=".doctor_homepage">
+
+    <!-- Header Title -->
+
+    <!-- Profile Icon -->
+
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/amita_bold"
+        android:text="HEALTH EASE"
+        android:textColor="#663399"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/profile1"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="-40dp"
+        android:src="@drawable/boy" />
+
+    <!-- Page Title -->
+    <TextView
+        android:id="@+id/page_title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:text="Patient Under Medication"
+        android:textColor="#7B4DAB"
+        android:textSize="24sp" />
+
+    <!-- Horizontal ScrollView -->
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        android:layout_marginTop="12dp"
+        android:scrollbars="none">
+
+        <!-- Horizontal LinearLayout for Patient Cards -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:orientation="horizontal">
+
+            <!-- Patient 1 Card -->
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/patientcard"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/patient_image"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/boy" />
+
+                <TextView
+                    android:id="@+id/patient_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Selena Rose"
+                    android:textColor="#663399"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Patient 2 Card -->
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/patientcard"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/patient_image2"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/boy" />
+
+                <TextView
+                    android:id="@+id/patient_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Paul Brown"
+                    android:textColor="#663399"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Patient 3 Card -->
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/patientcard"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/patient_image3"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/boy" />
+
+                <TextView
+                    android:id="@+id/patient_name3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Paul Coax"
+                    android:textColor="#663399"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Patient 4 Card -->
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/patientcard"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/patient_image4"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/boy" />
+
+                <TextView
+                    android:id="@+id/patient_name4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="selena"
+                    android:textColor="#663399"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/request_button1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/buttonbg"
+        android:backgroundTint="#E7F0BBFD"
+        android:text="Request for Access"
+        android:textColor="#663399"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/patient_image2"
+        />
+
+    <LinearLayout
+        android:id="@+id/patient_details_section"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/buttonbg"
+        android:backgroundTint="#92BD36CF"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/request_button1">
+
+        <!-- Accessible Patient -->
+        <TextView
+            android:id="@+id/details_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient details that can be viewed"
+            android:textColor="#663399"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_edge20"
+            android:backgroundTint="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/patientdetail_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/boy" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="220dp"
+                android:src="@drawable/hourglass"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

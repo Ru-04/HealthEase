@@ -20,13 +20,13 @@
         android:layout_marginTop="20dp"/>
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="600dp"
+        android:layout_width="330dp"
+        android:layout_height="660dp"
         android:orientation="vertical"
         android:background="@drawable/smal_btn"
         android:backgroundTint="#F0BBFD"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="30dp">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
-            android:text="Patient Number"
+            android:hint="Patient Number"
             android:layout_marginTop="35dp"
             android:textAlignment="center"
             android:fontFamily="@font/inter_variablefont"
@@ -52,29 +52,19 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
-            android:text="contact number"
+            android:hint="contact number"
             android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:fontFamily="@font/inter_variablefont"
             android:layout_gravity="center"/>
-        <EditText
-            android:id="@+id/adhar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_edge20"
-            android:backgroundTint="@color/white"
-            android:text="Adhar Number"
-            android:layout_marginTop="15dp"
-            android:textAlignment="center"
-            android:fontFamily="@font/inter_variablefont"
-            android:layout_gravity="center"/>
+
         <EditText
             android:id="@+id/dob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
-            android:text="DOB"
+            android:hint="DOB"
             android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:fontFamily="@font/inter_variablefont"
@@ -86,7 +76,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
-            android:text="Gender"
+            android:hint="Gender"
             android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:fontFamily="@font/inter_variablefont"
@@ -98,7 +88,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
-            android:text="email ID"
+            android:hint="email ID"
             android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:fontFamily="@font/inter_variablefont"
@@ -115,6 +105,7 @@
             android:text="Sign Up"
             android:layout_marginTop="30dp"
             android:textAllCaps="false"/>
+
     </LinearLayout>
 
 </LinearLayout>

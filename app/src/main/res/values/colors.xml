@@ -3,10 +3,16 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_200">#03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#B3FFFFFF</color>
     <color name="back_purple_dark">#BF65E0</color>
     <color name="my_color">#F0BBFD</color>
+    <color name="gradient">@drawable/nav_background</color>
+    <color name="purpledim">#94BF65E0</color>
+    <color name="my_color50">#80F0BBFD</color>
+    <color name="my_color42">#6BF0BBFD</color>
+    <color name="black60">#99000000</color>
+    <color name="newwhite">#FFFFFF</color>
 </resources>

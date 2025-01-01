@@ -49,6 +49,7 @@
                 android:backgroundTint="@color/white"
                 android:hint="enter OTP"
                 android:layout_marginTop="35dp"
+                android:maxLength="6"
                 android:textAlignment="center"
                 android:fontFamily="@font/inter_variablefont"
                 android:layout_gravity="center"/>

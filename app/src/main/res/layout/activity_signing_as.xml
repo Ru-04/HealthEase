@@ -7,16 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".Signing_as"
     android:background="@drawable/signing_as">
+
+
     <TextView
         android:id="@+id/sign_text"
-        android:layout_width="wrap_content"
+        android:layout_width="135dp"
         android:layout_height="wrap_content"
-        android:text="Sign In As"
-        android:fontFamily="@font/amita_regular"
-        android:textSize="25dp"
-        android:layout_marginTop="540dp"
         android:layout_marginHorizontal="164dp"
-        android:textColor="@color/black"/>
+        android:layout_marginTop="500dp"
+        android:fontFamily="@font/amita_regular"
+        android:text="Sign In As"
+        android:textColor="@color/black"
+        android:textSize="17dp" />
     <Button
         android:id="@+id/patient_btn"
         android:layout_width="wrap_content"
@@ -24,7 +26,7 @@
         android:background="@drawable/round_edge20"
         android:layout_below="@+id/sign_text"
         android:layout_marginHorizontal="93dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="50dp"
         android:text="Patient"
         android:fontFamily="@font/inter_variablefont"
         android:textColor="@color/black"/>
@@ -52,5 +54,6 @@
         android:text="Doctor"
         android:fontFamily="@font/inter_variablefont"
         android:textColor="@color/black"/>
+
 
 </RelativeLayout>

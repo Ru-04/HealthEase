@@ -1,7 +1,13 @@
 package com.xyz.healthease
 
+import android.content.Intent
+import android.graphics.Camera
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -12,6 +18,13 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.xyz.healthease.databinding.ActivityHomepageBinding
+import com.xyz.healthease.ui.gallery.GalleryActivity
+import com.xyz.healthease.ui.gallery.GalleryFragment
+import com.xyz.healthease.ui.slideshow.SlideshowFragment
+
+private lateinit var uploadbtn : Button
+private lateinit var medivaultbtn : Button
+private lateinit var camera3: ImageButton
 
 class homepage : AppCompatActivity() {
 
@@ -26,11 +39,6 @@ class homepage : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarHomepage.toolbar)
 
-        binding.appBarHomepage.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
-        }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_homepage)
@@ -43,6 +51,22 @@ class homepage : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        uploadbtn = findViewById(R.id.uploadbtn)
+        medivaultbtn = findViewById(R.id.medivaultbtn)
+        camera3 = findViewById(R.id.camera)
+
+        uploadbtn.setOnClickListener {
+            val intent = Intent(this@homepage,GalleryActivity::class.java)
+            startActivity(intent)
+        }
+        medivaultbtn.setOnClickListener {
+            val intent =Intent(this@homepage,SlideshowFragment::class.java)
+            startActivity(intent)
+        }
+        camera3.setOnClickListener {
+            val intent = Intent(this@homepage,Camera::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -55,4 +79,5 @@ class homepage : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_homepage)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 }

@@ -13,4 +13,5 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_homepage">homepage</string>
+    <string name="view_record">View Record</string>
 </resources>

@@ -23,7 +23,7 @@ class Signing : AppCompatActivity() {
             startActivity(intent)
         }
         sign_up.setOnClickListener {
-            val intent =Intent(this@Signing,Register_patient::class.java)
+            val intent =Intent(this@Signing,signupas::class.java)
             startActivity(intent)
         }
     }
