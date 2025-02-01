@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Enter_otp"
+    tools:context=".otp.Enter_otp"
     android:orientation="vertical"
     android:background="@drawable/background">
     <TextView
@@ -88,6 +88,14 @@
             android:layout_below="@id/click"
             android:layout_gravity="center"
             android:layout_marginTop="22dp"/>
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/back_purple_dark"
+            android:foregroundGravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="140dp"/>
 
     </LinearLayout>
 

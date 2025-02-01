@@ -48,6 +48,9 @@ android {
         resources {
             excludes += "/META-INF/native-image/org.mongodb/bson/native-image.properties"
         }
+        aaptOptions{
+            noCompress+= "tflite"
+        }
     }
 }
 
@@ -79,22 +82,22 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation ("org.tensorflow:tensorflow-lite:2.13.0")
+    implementation ("org.tensorflow:tensorflow-lite-support:0.4.3")
+    implementation ("com.google.code.gson:gson:2.10")
+    implementation ("com.google.mlkit:text-recognition:16.0.1")
     val camerax_version = "1.4.1"
     // The following line is optional, as the core library is included indirectly by camera-camera2
-    implementation("androidx.camera:camera-core:${camerax_version}")
-    implementation("androidx.camera:camera-camera2:${camerax_version}")
-    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
-    implementation("androidx.camera:camera-view:${camerax_version}")
+
     implementation("com.hbb20:ccp:2.5.0")
     implementation("com.google.firebase:firebase-auth")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4") // or the latest stable version
-    implementation ("org.mongodb:mongodb-driver-sync:4.10.2")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation ("com.google.code.gson:gson:2.10.1")
-    // SLF4J API
-    implementation ("org.slf4j:slf4j-api:2.0.9")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
-    // SLF4J Simple Binding (for basic console logging)
-    implementation ("org.slf4j:slf4j-simple:2.0.9")
+    }
 
-}
+
+
+

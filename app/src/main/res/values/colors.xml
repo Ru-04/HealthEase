@@ -15,4 +15,5 @@
     <color name="my_color42">#6BF0BBFD</color>
     <color name="black60">#99000000</color>
     <color name="newwhite">#FFFFFF</color>
+    <color name="transwhite">#33FFFFFF</color>
 </resources>

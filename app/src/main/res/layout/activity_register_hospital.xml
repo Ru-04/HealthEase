@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    android:padding="20dp">
+
+    <!-- App Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HEALTH EASE"
+        android:fontFamily="@font/amita_regular"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:paddingBottom="20dp" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/smal_btn"
+                android:backgroundTint="#8AF0BBFD"
+                android:padding="10dp">
+
+                <!-- Profile Icon -->
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="59dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="18dp"
+                    android:src="@drawable/user" />
+
+
+                <!-- Scrollable Content -->
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fillViewport="true">
+
+
+                <!-- Input Fields -->
+                <EditText
+                    android:id="@+id/hospital_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:hint="Hospital Name"
+                    android:padding="10dp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/hos_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:hint="Hospital ID"
+                    android:padding="10dp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:hint="Address"
+                    android:padding="10dp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/date_of_establishment"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:hint="date of establishment"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/admin_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:hint="Admin email id"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/department"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:hint="Department"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/licence_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center"
+                    android:hint="Licence Number"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/capacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:hint="Capacity"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/contact_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:hint="Contact Number"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center" />
+
+                    <EditText
+                        android:id="@+id/admin_id_hos"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:hint="Contact Number"
+                        android:background="@drawable/round_edge20"
+                        android:backgroundTint="@color/white"
+                        android:padding="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center" />
+
+                    <EditText
+                        android:id="@+id/medical_sevice"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:hint="Medical Service"
+                        android:background="@drawable/round_edge20"
+                        android:backgroundTint="@color/white"
+                        android:padding="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center" />
+                    <EditText
+                        android:id="@+id/certification"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:hint="Certification"
+                        android:background="@drawable/round_edge20"
+                        android:backgroundTint="@color/white"
+                        android:padding="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center" />
+
+                <ProgressBar
+                    android:id="@+id/progress_circular1"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:indeterminateTint="@color/back_purple_dark"
+                    android:layout_marginHorizontal="130dp"
+                    android:visibility="gone"/>
+
+                <!-- Sign Up Button -->
+                <Button
+                    android:id="@+id/btn_sign_up"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp"
+                    android:text="Sign Up"
+                    android:textColor="@color/black"
+                    android:background="@drawable/round_edge20"
+                    android:backgroundTint="@color/white"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center" />
+                </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+</LinearLayout>

@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register_patient"
+    tools:context=".ui.Register_patient"
     android:orientation="vertical"
     android:background="@drawable/background">
     <TextView
@@ -40,8 +40,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
-            android:hint="Patient Number"
+            android:hint="Patient Name"
             android:layout_marginTop="35dp"
+            android:focusable="true"
             android:textAlignment="center"
             android:fontFamily="@font/inter_variablefont"
             android:layout_gravity="center"/>
@@ -52,6 +53,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
+            android:maxLength="10"
+            android:focusable="true"
             android:hint="contact number"
             android:layout_marginTop="15dp"
             android:textAlignment="center"
@@ -65,6 +68,7 @@
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
             android:hint="DOB"
+            android:focusable="true"
             android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:fontFamily="@font/inter_variablefont"
@@ -77,6 +81,7 @@
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
             android:hint="Gender"
+            android:focusable="true"
             android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:fontFamily="@font/inter_variablefont"
@@ -89,6 +94,7 @@
             android:background="@drawable/round_edge20"
             android:backgroundTint="@color/white"
             android:hint="email ID"
+            android:focusable="true"
             android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:fontFamily="@font/inter_variablefont"
@@ -105,6 +111,13 @@
             android:text="Sign Up"
             android:layout_marginTop="30dp"
             android:textAllCaps="false"/>
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/back_purple_dark"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="140dp"/>
 
     </LinearLayout>
 

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Doctor_splash"
+    tools:context=".doctorsignIn.Doctor_splash"
     android:background="@drawable/doctor_back">
     <ProgressBar
         android:layout_width="wrap_content"

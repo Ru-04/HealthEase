@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-11-20T08:27:35.419793700Z">
+        <DropdownSelection timestamp="2025-02-01T10:31:21.847607200Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\arush\.android\avd\Pixel_8_Pro_API_28.avd" />
@@ -13,12 +13,15 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="patient_homePage">
+      <SelectionState runConfigName="Register_patient (1)">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="homepage">
+      <SelectionState runConfigName="homepage (1)">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-11-20T08:49:37.868066Z">
+      </SelectionState>
+      <SelectionState runConfigName="homepage_patient">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2025-01-27T06:36:20.786617300Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\arush\.android\avd\Pixel_8_Pro_API_28.avd" />
@@ -27,13 +30,13 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="Camera">
+      <SelectionState runConfigName="SigningAs">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="GalleryActivity">
+      <SelectionState runConfigName="GalleryA">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="Register_patient">
+      <SelectionState runConfigName="SignupAs">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

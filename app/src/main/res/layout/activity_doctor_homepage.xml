@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/homed"
     android:orientation="vertical"
-    tools:context=".doctor_homepage">
+    tools:context=".homepage.doctor_homepage">
 
     <!-- Header Title -->
 

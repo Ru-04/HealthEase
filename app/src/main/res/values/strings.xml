@@ -14,4 +14,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_homepage">homepage</string>
     <string name="view_record">View Record</string>
+    <string name="camera_description">Camera Button</string>
+    <string name="title_activity_patient_homepage">patient_homepage</string>
+
 </resources>

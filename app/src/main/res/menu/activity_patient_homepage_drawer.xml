@@ -7,17 +7,14 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/home"
-            android:title="Home"
-            android:iconTint="@color/my_color"/>
+            android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/upload"
-            android:title="Upload Record"
-            android:iconTint="@color/my_color"/>
+            android:title="@string/menu_gallery" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/view"
-            android:title="@string/view_record"
-            android:iconTint="@color/my_color"/>
+            android:title="@string/menu_slideshow" />
     </group>
 </menu>

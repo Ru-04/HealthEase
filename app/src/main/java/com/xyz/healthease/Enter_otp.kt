@@ -4,133 +4,154 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.semantics.text
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.xyz.healthease.api.ApiClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-import java.util.Timer
-import java.util.TimerTask
-import java.util.concurrent.TimeUnit
-
-
-
-
-class Enter_otp : AppCompatActivity() {
-
-    private lateinit var phoneNumber: String
-    private var timeoutSeconds: Long = 60L
-    private  lateinit var resendtoken : PhoneAuthProvider.ForceResendingToken
-    private lateinit var storedverificationId :String
-    private lateinit var box :EditText
-    private lateinit var click :Button
-    private lateinit var resend :TextView
-    val db = Firebase.firestore
-    private val mAuth: FirebaseAuth= FirebaseAuth.getInstance()
-
+class EnterOtp : AppCompatActivity() {
+    private lateinit var otpInput: EditText
+    private lateinit var verifyButton: Button
+    private lateinit var resendText: TextView
+    private lateinit var progressCircular: ProgressBar
+    private lateinit var apiService: ApiService
+    private var phone: String? = null
+    private var resendEnabled = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_enter_otp)
 
-        click = findViewById(R.id.click)
-        box = findViewById(R.id.box)
-        resend = findViewById(R.id.resend)
+        // Initialize UI components
+        otpInput = findViewById(R.id.box)
+        verifyButton = findViewById(R.id.click)
+        resendText = findViewById(R.id.resend)
+        progressCircular = findViewById(R.id.progress_circular)
+        progressCircular.visibility = View.GONE
 
-        phoneNumber = intent.extras?.getString("phone") ?: ""
-        Log.d("PhoneNumber", "Phone number from Intent: $phoneNumber") // Print phone number
-        if (phoneNumber.isBlank()) {
-            Log.e("PhoneNumber", "Phone number is empty or missing")
-        }else{
-        sendOtp(phoneNumber, false)
+        // Initialize Retrofit service
+        apiService = ApiClient.getApiService()
+
+        // Get phone number from intent
+        phone = intent.getStringExtra("phone")
+
+        // Handle OTP verification
+        verifyButton.setOnClickListener {
+            val otp = otpInput.text.toString().trim()
+            if (otp.isEmpty()) {
+                otpInput.error = "Enter OTP"
+            } else if (phone != null) {
+                verifyOtp(phone!!, otp)
+            } else {
+                Toast.makeText(this, "Phone number is missing", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        click.setOnClickListener {
-            val enterOtp = box.text.toString()
-            val credential = PhoneAuthProvider.getCredential(storedverificationId, enterOtp)
-            signIn(credential)
+        // Handle Resend OTP
+        resendText.setOnClickListener {
+            if (!resendEnabled) {
+                Toast.makeText(this, "Please wait before resending", Toast.LENGTH_SHORT).show()
+            } else if (phone != null) {
+                resendOtp(phone!!)
+            }
         }
-        resend.setOnClickListener {
-            sendOtp(phoneNumber, true)
-        }
+
+        startResendCountdown()
     }
 
-        private fun sendOtp(phoneNumber: String, isResend: Boolean) {
-            startResendTimer()
-            val builder = PhoneAuthOptions.newBuilder(mAuth)
-                .setPhoneNumber(phoneNumber)
-                .setTimeout(timeoutSeconds, TimeUnit.SECONDS)
-                .setActivity(this)
-                .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                    override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                        signIn(phoneAuthCredential)
+    private fun verifyOtp(phone: String, otp: String) {
+        progressCircular.visibility = View.VISIBLE
+        verifyButton.isEnabled = false
+
+        // Prepare the request body
+        val request = ApiService.OtpRequest(phone, otp)
+        val call = apiService.verifyOtp(request)
+
+        // Make the network call
+        call.enqueue(object : Callback<ApiService.ApiResponse> {
+            override fun onResponse(
+                call: Call<ApiService.ApiResponse>,
+                response: Response<ApiService.ApiResponse>
+            ) {
+                progressCircular.visibility = View.GONE
+                verifyButton.isEnabled = true
+
+                if (response.isSuccessful && response.body() != null) {
+                    val message = response.body()?.message ?: "Verification successful"
+                    Toast.makeText(this@EnterOtp, message, Toast.LENGTH_SHORT).show()
+
+                    val patientId = response.body()?.patientId
+                    println("patient id received from the server: $patientId")
+                    if (patientId != null) {
+                        // Navigate to the homepage on successful verification
+                        val sharedPreferences = getSharedPreferences("HealthEasePrefs", MODE_PRIVATE)
+                        sharedPreferences.edit().putString("PATIENT_ID", patientId).apply()
+                        println("patientId: $patientId")
+                    } else {
+                        Toast.makeText(this@EnterOtp, "Patient ID not found", Toast.LENGTH_SHORT).show()
                     }
 
-                    override fun onVerificationFailed(e: FirebaseException) {
-                        Toast.makeText(applicationContext, "OTP verification failed",Toast.LENGTH_LONG).show()
-                    }
-
-                    override fun onCodeSent(s: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
-                        super.onCodeSent(s, forceResendingToken)
-                        storedverificationId = s
-                        resendtoken = forceResendingToken
-                        Toast.makeText(applicationContext, "OTP sent successfully",Toast.LENGTH_LONG).show()
-                    }
-                })
-
-            if(isResend)
-            {
-            PhoneAuthProvider.verifyPhoneNumber(builder.setForceResendingToken(resendtoken).build())
-            }
-            else
-            {
-                PhoneAuthProvider.verifyPhoneNumber(builder.build())
-            }
-
-        }
-        fun signIn(phoneAuthCredential: PhoneAuthCredential) {
-            mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val intent = Intent(this@Enter_otp, homepage::class.java)
-                    intent.putExtra("phone", phoneNumber)
+                    // Navigate to the homepage on successful verification
+                    val intent = Intent(this@EnterOtp, homepage_patient::class.java)
+                    intent.putExtra("phone", phone)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(applicationContext, "OTP verification failed",Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@EnterOtp,
+                        "Invalid OTP or verification failed",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-        }
 
-
-    private fun startResendTimer() {
-        resend.isEnabled = false
-
-        val handler = Handler(Looper.getMainLooper())
-        val runnable = object : Runnable {
-            override fun run() {
-                timeoutSeconds--
-                resend.text = "Resend OTP in $timeoutSeconds seconds"
-                if (timeoutSeconds <= 0) {
-                    timeoutSeconds = 60L
-                    handler.removeCallbacks(this) // Stop the timer
-                    resend.isEnabled = true
-                    resend.text = "Resend OTP" // Reset button text
-                } else {
-                    handler.postDelayed(this, 1000) // Schedule next execution
-                }
+            override fun onFailure(call: Call<ApiService.ApiResponse>, t: Throwable) {
+                progressCircular.visibility = View.GONE
+                verifyButton.isEnabled = true
+                Toast.makeText(this@EnterOtp, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
-        }
-        handler.post(runnable) // Start the timer
+        })
     }
 
+    private fun resendOtp(phone: String) {
+        progressCircular.visibility = View.VISIBLE
+
+        val request = ApiService.PhoneRequest(phone)
+        val call = apiService.sendOtp(request)
+
+        call.enqueue(object : Callback<ApiService.ApiResponse> {
+            override fun onResponse(
+                call: Call<ApiService.ApiResponse>,
+                response: Response<ApiService.ApiResponse>
+            ) {
+                progressCircular.visibility = View.GONE
+
+                if (response.isSuccessful && response.body() != null) {
+                    Toast.makeText(this@EnterOtp, "OTP resent successfully", Toast.LENGTH_SHORT).show()
+                    startResendCountdown()
+                } else {
+                    Toast.makeText(this@EnterOtp, "Failed to resend OTP", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ApiService.ApiResponse>, t: Throwable) {
+                progressCircular.visibility = View.GONE
+                Toast.makeText(this@EnterOtp, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun startResendCountdown() {
+        resendEnabled = false
+        resendText.text = "Resend OTP in 60 sec"
+
+        // Use Handler to manage countdown
+        Handler(Looper.getMainLooper()).postDelayed({
+            resendEnabled = true
+            resendText.text = "Resend OTP"
+        }, 60000)
+    }
 }

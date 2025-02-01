@@ -5,7 +5,7 @@
     android:id="@+id/signing_as"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Signing_as"
+    tools:context=".signinPatient.Signing_as"
     android:background="@drawable/signing_as">
 
     <TextView

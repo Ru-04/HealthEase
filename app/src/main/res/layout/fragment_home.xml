@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/homeback"
-    tools:context=".ui.theme.ui.home.Homepage">
+    tools:context=".ui.home.HomeFragment"
+    android:background="@drawable/homeback">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -66,86 +67,70 @@
                 android:layout_marginLeft="275dp"
                 android:layout_marginTop="180dp"
                 android:src="@drawable/emoticon" />
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <Button
+                android:id="@+id/upload"
+                android:layout_width="150dp"
+                android:layout_height="49dp"
                 android:background="@drawable/strip2"
-                android:layout_marginTop="330dp"
-                android:layout_marginLeft="35dp">
+                android:layout_marginTop="310dp"
+                android:layout_marginLeft="40dp"
+                android:text="Upload prescription"
+                android:textSize="11dp"
+                android:fontFamily="@font/inter_variablefont"
+                android:textColor="@color/black"/>
 
-                <Button
-                    android:id="@+id/uploadbtn"
-                    android:layout_width="150dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/strip"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="Upload prescription"
-                    android:textSize="11dp"
-                    android:paddingLeft="20dp"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/inter_variablefont"/>
-            </RelativeLayout>
+            <Button
+                android:id="@+id/medi"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="@drawable/strip2"
+                android:layout_marginLeft="230dp"
+                android:layout_marginTop="310dp"
+                android:text="MediVault"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_variablefont"/>
+
+            <Button
+                android:id="@+id/load"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="310dp"
+                android:layout_marginLeft="186dp"
+                android:background="@drawable/uploadcircle_trans"
+                android:clickable="true" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/submit"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="338dp"/>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/strip2"
-                android:layout_marginTop="330dp"
-                android:layout_marginLeft="220dp">
-                <Button
-                    android:id="@+id/medivaultbtn"
-                    android:layout_width="150dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/strip"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="MediVault"
-                    android:textColor="@color/black"
-                    android:paddingLeft="20dp"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/inter_variablefont"/>
-            </RelativeLayout>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/folder"
-                android:layout_marginLeft="240dp"
-                android:layout_marginTop="338dp"/>
-
-            <ImageButton
-                android:id="@+id/camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="330dp"
-                android:layout_marginLeft="188dp"
                 android:src="@drawable/camera"
-                android:background="?attr/selectableItemBackgroundBorderless" />
+                android:layout_marginTop="315dp"
+                android:layout_marginLeft="184dp"/>
 
 
-            <SearchView
+            <Button
+                android:id="@+id/search_txt"
                 android:layout_width="400dp"
                 android:layout_height="40dp"
                 android:background="@drawable/strip"
                 android:backgroundTint="@color/purpledim"
-                android:layout_marginTop="410dp"
+                android:layout_marginTop="390dp"
                 android:layout_marginLeft="25dp"
+                android:clickable="true"
+                android:focusable="true"
                 />
             <EditText
                 android:layout_width="300dp"
-                android:layout_height="45dp"
+                android:layout_height="48dp"
                 android:hint="Search Doctor/past medical reports"
                 android:textColorHint="@color/black"
                 android:fontFamily="@font/inter_variablefont"
-                android:layout_marginTop="410dp"
-                android:layout_marginLeft="70dp"/>
+                android:layout_marginTop="390dp"
+                android:layout_marginLeft="70dp"
+                android:clickable="true"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
+
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -219,26 +204,28 @@
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="120dp"
-                            android:background="@drawable/specback"
-                            android:layout_marginTop="510dp"
                             android:layout_marginLeft="15dp"
+                            android:layout_marginTop="510dp"
+                            android:background="@drawable/specback"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ortho"
+                                android:layout_marginLeft="24dp"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginLeft="24dp"/>
+                                android:src="@drawable/ortho" />
 
                             <TextView
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
-                                android:text="Ortho.."
-                                android:layout_marginTop="15dp"
                                 android:layout_marginLeft="20dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Ortho.."
                                 android:textColor="@color/black"
-                                android:textSize="18dp"/>
+                                android:textSize="18dp" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="120dp"
@@ -311,7 +298,7 @@
                 android:background="@drawable/buttonbg"
                 android:backgroundTint="@color/my_color"
                 android:layout_marginTop="710dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginBottom="10dp"/>
 
             <RelativeLayout
@@ -320,7 +307,7 @@
                 android:background="@drawable/buttonbg"
                 android:backgroundTint="@color/my_color50"
                 android:layout_marginTop="700dp"
-                android:layout_marginLeft="17dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="10dp"/>
             <RelativeLayout
                 android:layout_width="380dp"
@@ -328,7 +315,7 @@
                 android:background="@drawable/buttonbg"
                 android:backgroundTint="@color/my_color42"
                 android:layout_marginTop="690dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginBottom="20dp"/>
             <ImageView
                 android:layout_width="wrap_content"
@@ -378,16 +365,18 @@
                 android:background="@color/white"
                 android:layout_marginTop="820dp"
                 android:layout_marginLeft="60dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No medical record found"
-                    android:textColor="@color/black60"
-                    android:layout_marginTop="830dp"
-                    android:fontFamily="@font/inter_variablefont"
-                    android:textColorHint="@color/my_color"
-                    android:layout_marginLeft="110dp"
-                    />
-                </RelativeLayout>
-            </ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No medical record found"
+                android:textColor="@color/black60"
+                android:layout_marginTop="830dp"
+                android:fontFamily="@font/inter_variablefont"
+                android:textColorHint="@color/my_color"
+                android:layout_marginLeft="110dp"
+                />
+        </RelativeLayout>
+    </ScrollView>
+
+
 </RelativeLayout>
