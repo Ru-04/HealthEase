@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -44,6 +45,10 @@ interface ApiService {
 
     @POST("hospital/register")
     suspend fun saveHospital(@Body hospital: Hospital): Map<String, String>
+
+    @Headers("Content-Type: application/json")
+    @POST("/familyMember")
+    fun familyMember(@Body request: AddFamilyRequest): Call<Map<String, Any>>
 
 
     // Request and response data classes for OTP-related calls

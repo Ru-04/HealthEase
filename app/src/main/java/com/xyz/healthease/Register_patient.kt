@@ -1,6 +1,7 @@
 package com.xyz.healthease
 
 import android.app.DatePickerDialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +11,8 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.navigation.NavigationView
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.xyz.healthease.api.ApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -61,60 +63,78 @@ class RegisterPatient : AppCompatActivity() {
         }
 
         signupButton.setOnClickListener {
-            val username = etUsername.text.toString().trim()
-            val email = etEmail.text.toString().trim()
-            val phone = etPhone.text.toString().trim()
-            val gender = etGender.text.toString().trim()
-            val dob = etDob.text.toString().trim()
+            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                    return@addOnCompleteListener
+                }
 
-            if (dob.matches(Regex("\\d{4}/\\d{2}/\\d{2}"))) { // Validate format YYYY/MM/DD
-                val patient = Patient(
-                    patientName = username,
-                    dob = dob,
-                    gender = gender,
-                    email = email,
-                    contactNo = phone
-                )
+                val token = task.result // Token is now accessible inside this block
+                Log.d(TAG, "FCM Token received: $token") // ✅ Log when token is received
+                Toast.makeText(this, "FCM Token received: $token", Toast.LENGTH_SHORT).show()
 
-                progressCircular.visibility = View.VISIBLE // Show progress bar
+                val username = etUsername.text.toString().trim()
+                val email = etEmail.text.toString().trim()
+                val phone = etPhone.text.toString().trim()
+                val gender = etGender.text.toString().trim()
+                val dob = etDob.text.toString().trim()
 
-                // Send data to the Node.js server using Retrofit
-                CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        val response = ApiClient.getApiService().savePatient(patient)
-                        runOnUiThread {
-                            progressCircular.visibility = View.GONE // Hide progress bar
-                            if (response.message.isNotEmpty() && response.patientId.isNotEmpty()) {
-                                val sharedPreferences = getSharedPreferences("HealthEasePrefs", MODE_PRIVATE)
-                                sharedPreferences.edit().putString("PATIENT_ID", response.patientId).apply()
+                if (dob.matches(Regex("\\d{4}/\\d{2}/\\d{2}"))) { // Validate format YYYY/MM/DD
+                    val patient = Patient(
+                        patientName = username,
+                        dob = dob,
+                        gender = gender,
+                        email = email,
+                        contactNo = phone,
+                        fcm_token = token
+                    )
+
+                    progressCircular.visibility = View.VISIBLE // Show progress bar
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            val response = ApiClient.getApiService().savePatient(patient)
+                            runOnUiThread {
+                                progressCircular.visibility = View.GONE // Hide progress bar
+                                if (response.message.isNotEmpty() && response.patientId.isNotEmpty()) {
+                                    val sharedPreferences =
+                                        getSharedPreferences("HealthEasePrefs", MODE_PRIVATE)
+                                    sharedPreferences.edit()
+                                        .putString("PATIENT_ID", response.patientId).apply()
+                                    Toast.makeText(
+                                        this@RegisterPatient,
+                                        "Registration Successful! Patient ID: ${response.patientId}",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+
+                                    val intent =
+                                        Intent(this@RegisterPatient, homepage_patient::class.java)
+                                    intent.putExtra("PATIENT_ID", response.patientId)
+                                    startActivity(intent)
+                                } else {
+                                    Toast.makeText(
+                                        this@RegisterPatient,
+                                        "Unexpected response: $response",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            runOnUiThread {
+                                progressCircular.visibility = View.GONE // Hide progress bar
                                 Toast.makeText(
                                     this@RegisterPatient,
-                                    "Registration Successful! Patient ID: ${response.patientId}",
-                                    Toast.LENGTH_LONG
-                                ).show()
-
-                                // Pass the patientId to the next screen
-                                val intent = Intent(this@RegisterPatient, homepage_patient::class.java)
-                                intent.putExtra("PATIENT_ID", response.patientId)
-                                startActivity(intent)
-                            } else {
-                                Toast.makeText(
-                                    this@RegisterPatient,
-                                    "Unexpected response: $response",
+                                    "Error: ${e.message}",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
                         }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        runOnUiThread {
-                            progressCircular.visibility = View.GONE // Hide progress bar
-                            Toast.makeText(this@RegisterPatient, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
                     }
+                } else {
+                    Toast.makeText(this, "Invalid date format (use YYYY/MM/DD)", Toast.LENGTH_SHORT)
+                        .show()
                 }
-            } else {
-                Toast.makeText(this, "Invalid date format (use YYYY/MM/DD)", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -285,12 +285,14 @@
                 android:layout_marginLeft="20dp"
                 android:fontFamily="@font/amita_bold"
                 android:textColor="@color/black"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/addfamily"
+
+            <Button
+                android:id="@+id/add"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="650dp"
-                android:layout_marginLeft="130dp"/>
+                android:layout_marginLeft="130dp"
+                android:background="@drawable/addfamily"/>
 
             <RelativeLayout
                 android:layout_width="380dp"
@@ -298,25 +300,9 @@
                 android:background="@drawable/buttonbg"
                 android:backgroundTint="@color/my_color"
                 android:layout_marginTop="710dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="17dp"
                 android:layout_marginBottom="10dp"/>
 
-            <RelativeLayout
-                android:layout_width="380dp"
-                android:layout_height="160dp"
-                android:background="@drawable/buttonbg"
-                android:backgroundTint="@color/my_color50"
-                android:layout_marginTop="700dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="10dp"/>
-            <RelativeLayout
-                android:layout_width="380dp"
-                android:layout_height="160dp"
-                android:background="@drawable/buttonbg"
-                android:backgroundTint="@color/my_color42"
-                android:layout_marginTop="690dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginBottom="20dp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -377,6 +363,9 @@
                 />
         </RelativeLayout>
     </ScrollView>
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

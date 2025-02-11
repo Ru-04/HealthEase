@@ -43,10 +43,13 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
-    }
+  }
     packaging {
         resources {
+            excludes += "/META-INF/versions/9/OSGI-INF/MANIFEST.MF"
             excludes += "/META-INF/native-image/org.mongodb/bson/native-image.properties"
+            excludes += "META-INF/versions/9/OSGI-INF/**"
+            excludes += "META-INF/DEPENDENCIES"
         }
         aaptOptions{
             noCompress+= "tflite"
@@ -74,6 +77,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.identity.doctypes.jvm)
+    implementation(libs.firebase.messaging)
+    implementation(libs.volley)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -95,8 +101,10 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation("com.google.firebase:firebase-analytics")
+}
 
-    }
 
 
 

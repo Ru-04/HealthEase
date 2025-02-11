@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/app_logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo2"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HEALTHEASE"
+            android:fontFamily="@font/allertastencil_regular"
+            android:textColor="#99000000"
+            android:textSize="30sp"
+            android:layout_toRightOf="@id/app_logo"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="someone wants to add you as family member"
+            android:textAlignment="center"
+            android:fontFamily="@font/inter_italic"
+            android:textColor="#99000000"
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/app_logo"
+            android:layout_below="@id/title"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"/>
+
+        <Button
+            android:id="@+id/allow"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/description"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="10dp"
+            android:text="Allow adding"
+            android:fontFamily="@font/inter_italic"
+            android:textAllCaps="false"
+            android:background="@drawable/strip"
+            android:backgroundTint="@color/notifyColor"/>
+
+        <Button
+            android:id="@+id/deny"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/description"
+            android:layout_marginLeft="240sp"
+            android:layout_marginTop="10dp"
+            android:text="Deny adding"
+            android:fontFamily="@font/inter_italic"
+            android:textAllCaps="false"
+            android:background="@drawable/strip"
+            android:backgroundTint="@color/notifyColor"/>
+    </RelativeLayout>
+
+</RelativeLayout>

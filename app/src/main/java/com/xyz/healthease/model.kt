@@ -10,6 +10,7 @@ data class Patient(
     val gender: String,
     val email: String,
     val contactNo: String,
+    val fcm_token: String?
     // Add any additional fields here (e.g., address, medical history)
 )
 
@@ -65,4 +66,8 @@ data class RegistrationResponse(
     val patientId: String
 )
 
-
+data class AddFamilyRequest(
+    val patient_id: String,
+    val family_id: String,
+    val relation: String
+)

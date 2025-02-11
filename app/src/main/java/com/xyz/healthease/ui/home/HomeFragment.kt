@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.xyz.healthease.AddFamily
 import com.xyz.healthease.R
 import com.xyz.healthease.Search
 import com.xyz.healthease.camera
@@ -30,6 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var search: Button
     private lateinit var medivault: Button
     private lateinit var camera2: Button
+    private lateinit var add: Button
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,6 +44,7 @@ class HomeFragment : Fragment() {
         search = binding.root.findViewById(R.id.search_txt)
         medivault = binding.root.findViewById(R.id.medi)
         camera2 = binding.root.findViewById(R.id.load)
+        add = binding.root.findViewById(R.id.add)
 
         upload.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_galleryFragment)
@@ -57,6 +61,10 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        add.setOnClickListener {
+            val intent = Intent(activity, AddFamily::class.java)
+            startActivity(intent)
+        }
         return root
     }
 

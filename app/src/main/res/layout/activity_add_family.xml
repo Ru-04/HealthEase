@@ -1,10 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFamily">
+    tools:context=".AddFamily"
+    android:background="@drawable/nav_background">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HEALTHEASE"
+        android:fontFamily="@font/amita_regular"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"/>
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:background="@drawable/smal_btn"
+        android:backgroundTint="#F0BBFD"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add Family
+             Member"
+            android:fontFamily="@font/amita_regular"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:id="@+id/memberId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_edge20"
+            android:backgroundTint="@color/white"
+            android:hint="enter member id"
+            android:layout_marginTop="35dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/inter_variablefont"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="enter your relationship with the family member"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:fontFamily="@font/inter_variablefont"
+            android:textSize="15dp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/relationship"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:hint="enter relationship"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/smal_btn"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/inter_variablefont"
+            android:textAlignment="center"
+            android:textColor="@color/black"/>
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/back_purple_dark"
+            android:foregroundGravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="140dp"/>
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/smal_btn"
+            android:backgroundTint="#9EFFFFFF"
+            android:fontFamily="@font/inter_variablefont"
+            android:text="send"
+            android:textAllCaps="false" />
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

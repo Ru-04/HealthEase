@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "159362932405",
-    "project_id": "healthease-7e2e6",
-    "storage_bucket": "healthease-7e2e6.appspot.com"
+    "project_number": "36609823356",
+    "project_id": "notify-28005",
+    "storage_bucket": "notify-28005.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:159362932405:android:9eaa1dc277d3fe6ec868fc",
+        "mobilesdk_app_id": "1:36609823356:android:45976f2b124ac484e0aff9",
         "android_client_info": {
           "package_name": "com.xyz.healthease"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBkYmb4EnV270Um_G0pQIBWrv_GivHRPh8"
+          "current_key": "AIzaSyBG-DvWEWSXI7UvP7V9dVWM-qI9XGz8bNQ"
         }
       ],
       "services": {
