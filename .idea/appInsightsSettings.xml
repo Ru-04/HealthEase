@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.xyz.healthease" />
-                  <option name="mobileSdkAppId" value="1:159362932405:android:9eaa1dc277d3fe6ec868fc" />
-                  <option name="projectId" value="healthease-7e2e6" />
-                  <option name="projectNumber" value="159362932405" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

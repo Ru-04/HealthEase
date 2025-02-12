@@ -27,7 +27,7 @@ class NotificationReceiver : BroadcastReceiver() {
 
         // Use the Node.js server endpoint for responding to notifications.
         // Adjust the URL if needed based on your server configuration.
-        val url = "http://172.19.134.175:3000/api/respondNotification"
+        val url = "http://192.168.65.230:3000/api/respondNotification"
         val requestQueue = Volley.newRequestQueue(context)
 
         // Create the JSON payload with notificationId and response
