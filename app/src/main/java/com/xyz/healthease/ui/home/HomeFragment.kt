@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.xyz.healthease.AddFamily
+import com.xyz.healthease.Choice
 import com.xyz.healthease.R
 import com.xyz.healthease.Search
 import com.xyz.healthease.camera
@@ -62,7 +63,7 @@ class HomeFragment : Fragment() {
         }
 
         add.setOnClickListener {
-            val intent = Intent(activity, AddFamily::class.java)
+            val intent = Intent(activity, Choice::class.java)
             startActivity(intent)
         }
         return root

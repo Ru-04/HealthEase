@@ -53,6 +53,9 @@ class AddFamily : AppCompatActivity() {
             apiService.familyMember(request).enqueue(object : Callback<Map<String, Any>> {
                 override fun onResponse(call: Call<Map<String, Any>>, response: Response<Map<String, Any>>) {
                     if (response.isSuccessful) {
+                        sharedPreferences.edit()
+                            .putString("FAMILY_ID", familyMemberId)
+                            .apply()
                         Toast.makeText(this@AddFamily, "Request sent successfully!", Toast.LENGTH_SHORT).show()
                     } else {
                         val errorResponse = response.errorBody()?.string()

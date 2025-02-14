@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 //192.168.171.230
 object ApiClient {
 
-    private const val BASE_URL = "http://192.168.250.230:3000" // Update this based on your server environment
+    private const val BASE_URL = "http://172.19.134.175:3000" // Update this based on your server environment
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY // Log the request and response bodies for debugging

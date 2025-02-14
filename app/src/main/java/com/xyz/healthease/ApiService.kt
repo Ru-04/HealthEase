@@ -3,6 +3,7 @@ package com.xyz.healthease
 //import com.google.android.gms.common.api.Response
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -11,6 +12,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -50,14 +52,48 @@ interface ApiService {
     @POST("/familyMember")
     fun familyMember(@Body request: AddFamilyRequest): Call<Map<String, Any>>
 
+    @POST("/respondAccess")
+    suspend fun respondAccess(@Body request: ResponseAccessRequest): Response<ResponseBody>
 
-    // Request and response data classes for OTP-related calls
+    @POST("/getFamilyReports")
+    suspend fun getFamilyReports(
+        @Body request: GetFamilyReportsRequest
+    ): Response<GetReportsResponse>
+    @POST("/api/add-child") // Replace with your actual endpoint
+    fun addChild(@Body child: ChildRequest): Call<ChildResponse>
+    data class ChildRequest(
+        val patientId: String,
+        val name: String,
+        val age: Int,
+        val parentAccess: Boolean,
+        val relation: String
+    )
+
+    data class ChildResponse(
+        val message: String,
+        val childId: String?
+    )
+
+    data class ResponseAccessRequest(
+        val patient_id: String,
+        val family_id: String,
+        val response: String
+    )
+    data class GetFamilyReportsRequest(
+        val patient_id: String,
+        val family_id: String
+    )
+
     data class PhoneRequest(val phone: String) // To request OTP
     data class OtpRequest(val phone: String, val otp: String) // To verify OTP
     data class ApiResponse(val message: String, val success: Boolean, val patientId: String?)
     data class LogoutRequest(
         val patient_id: String,
         val isLoggedIn: Boolean
+    )
+    data class GetReportsResponse(
+        val success: Boolean,
+        val images: List<String>?
     )
     data class LogoutResponse(
         val message: String? // Matches API response `{ "message": "Login status updated successfully" }`

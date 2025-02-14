@@ -31,7 +31,6 @@ class homepage_patient : AppCompatActivity() {
     private lateinit var binding: ActivityHomepageBinding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var storeIdEditText: EditText
-    private lateinit var webSocket: WebSocket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +51,11 @@ class homepage_patient : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("HealthEasePrefs", MODE_PRIVATE)
         storeIdEditText = headerView.findViewById(R.id.store_id)
         val patientId = sharedPreferences.getString("PATIENT_ID", "")
-        storeIdEditText.setText(patientId)
-
+        val universalId = sharedPreferences.getString("UNIVERSAL_ID", "") ?: patientId
+        if (universalId!!.isEmpty()) {
+            sharedPreferences.edit().putString("UNIVERSAL_ID", patientId).apply()
+        }
+        storeIdEditText.setText(universalId)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout
@@ -90,22 +92,22 @@ class homepage_patient : AppCompatActivity() {
     }
 
     private fun logout() {
-        val patientId = sharedPreferences.getString("PATIENT_ID", null)
-        println("got patient id from shared refrences: $patientId")
-        if (patientId != null) {
-            println("Patient ID: $patientId")
-            sendLogoutRequest(patientId)
+        val universalId = sharedPreferences.getString("UNIVERSAL_ID", null)
+        println("got patient id from shared refrences: $universalId")
+        if (universalId != null) {
+            println("Patient ID: $universalId")
+            sendLogoutRequest(universalId)
         }
     }
 
-    private fun sendLogoutRequest(patientId: String) {
+    private fun sendLogoutRequest(universalId: String) {
         lifecycleScope.launch {
             try {
-                println("Sending logout request for patientId: $patientId") // Debug log
+                println("Sending logout request for patientId: $universalId") // Debug log
 
                 val response = ApiClient.getApiService().updateLoginStatus(
                     ApiService.LogoutRequest(
-                        patientId,
+                        universalId,
                         false
                     )
                 )
@@ -120,7 +122,7 @@ class homepage_patient : AppCompatActivity() {
                         Toast.makeText(this@homepage_patient, "Logout successful", Toast.LENGTH_SHORT).show()
                     }
 
-                    sharedPreferences.edit().remove("PATIENT_ID").apply()
+                    sharedPreferences.edit().remove("UNIVERSAL_ID").apply()
 
                     val intent = Intent(this@homepage_patient, Signing::class.java)
                     startActivity(intent)
