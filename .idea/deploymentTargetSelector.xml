@@ -30,9 +30,6 @@
       <SelectionState runConfigName="SignupAs">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="AddFamily">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="RegisterPatient">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2025-02-11T05:30:23.363656100Z">
@@ -54,6 +51,9 @@
           </Target>
         </DropdownSelection>
         <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="camera">
+        <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
   </component>

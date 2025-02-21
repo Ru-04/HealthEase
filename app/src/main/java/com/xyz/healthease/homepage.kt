@@ -55,7 +55,7 @@ class homepage_patient : AppCompatActivity() {
         if (universalId!!.isEmpty()) {
             sharedPreferences.edit().putString("UNIVERSAL_ID", patientId).apply()
         }
-        storeIdEditText.setText(universalId)
+        storeIdEditText.setText(patientId)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout

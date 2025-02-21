@@ -16,5 +16,6 @@
     <color name="black60">#99000000</color>
     <color name="newwhite">#FFFFFF</color>
     <color name="transwhite">#33FFFFFF</color>
+    <color name="backwhite">#D4FFFFFF</color>
     <color name="notifyColor">#F68A87</color>
 </resources>

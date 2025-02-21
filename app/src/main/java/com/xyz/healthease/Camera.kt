@@ -15,6 +15,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.bumptech.glide.Glide
+import com.cloudinary.Cloudinary
+import com.cloudinary.utils.ObjectUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.mlkit.vision.common.InputImage
@@ -37,6 +40,7 @@ import java.nio.channels.FileChannel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.Executors
 
 class camera : AppCompatActivity() {
 
@@ -113,7 +117,8 @@ class camera : AppCompatActivity() {
                 val file = File(path)
                 val patientId = sharedPreferences.getString("PATIENT_ID", null)
                 if (patientId != null) {
-                    uploadImage(file, patientId)
+                    uploadImageToCloudinary(file)
+                    println("file uploaded succesfully")
                 } else {
                     Toast.makeText(this, "Patient ID is missing", Toast.LENGTH_SHORT).show()
                 }
@@ -164,32 +169,60 @@ class camera : AppCompatActivity() {
         val category = labelMapping[maxIndex] ?: "Unknown"
         classifiedResult.text = "Classification Result:\n$category"
     }
+//
+//    private fun uploadImage(file: File, patientId: String) {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            try {
+//                val filePart = MultipartBody.Part.createFormData(
+//                    "file",
+//                    file.name,
+//                    file.asRequestBody("image/*".toMediaTypeOrNull())
+//                )
+//                val patientIdPart = patientId.toRequestBody("text/plain".toMediaTypeOrNull())
+//                val response = ApiClient.getApiService().uploadImage(filePart, patientIdPart)
+//                runOnUiThread {
+//                    if (response.containsKey("message")) {
+//                        Toast.makeText(this@camera, response["message"].toString(), Toast.LENGTH_SHORT).show()
+//                    } else {
+//                        Toast.makeText(this@camera, "Unexpected response: $response", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//                runOnUiThread {
+//                    Toast.makeText(this@camera, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//    }
+    private fun uploadImageToCloudinary(imageFile: File) {
+    val cloudinary = Cloudinary(
+        ObjectUtils.asMap(
+            "cloud_name", "dkrspzrhj",
+            "api_key", "263152711571172",
+            "api_secret", "hbn_y81gadRKr9LnOjmjhiHVieY"
+        )
+    )
 
-    private fun uploadImage(file: File, patientId: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+    Executors.newSingleThreadExecutor().execute {
             try {
-                val filePart = MultipartBody.Part.createFormData(
-                    "file",
-                    file.name,
-                    file.asRequestBody("image/*".toMediaTypeOrNull())
-                )
-                val patientIdPart = patientId.toRequestBody("text/plain".toMediaTypeOrNull())
-                val response = ApiClient.getApiService().uploadImage(filePart, patientIdPart)
+                val result = cloudinary.uploader().upload(imageFile, ObjectUtils.emptyMap())
+                val imageUrl = result["secure_url"] as String
                 runOnUiThread {
-                    if (response.containsKey("message")) {
-                        Toast.makeText(this@camera, response["message"].toString(), Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@camera, "Unexpected response: $response", Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(this@camera, "Image Uploaded: $imageUrl", Toast.LENGTH_SHORT).show()
+                    Glide.with(this@camera).load(imageUrl).into(cameraImage)
+                        // Send the image URL to Node.js backend
+                       // sendImageUrlToBackend(imageUrl)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 runOnUiThread {
-                    Toast.makeText(this@camera, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@camera, "Upload Failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
 
     private fun preprocessText(text: String, maxLength: Int = 100): FloatArray {
         val tokens = text.lowercase().split("\\s+".toRegex())

@@ -1,11 +1,13 @@
 package com.xyz.healthease
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 import com.xyz.healthease.api.ApiClient
 import org.json.JSONObject
 
@@ -18,6 +20,7 @@ class AddFamily : AppCompatActivity() {
     private lateinit var relation: EditText
     private lateinit var send: Button
     private lateinit var apiService: ApiService
+
    // private lateinit var socket: Socket  // Declare socket object
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +59,12 @@ class AddFamily : AppCompatActivity() {
                         sharedPreferences.edit()
                             .putString("FAMILY_ID", familyMemberId)
                             .apply()
+
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("FAMILY_NAME", familyMemberId)  // Pass name or ID
+                        resultIntent.putExtra("FAMILY_RELATION", relationText)
+                        setResult(RESULT_OK, resultIntent)
+
                         Toast.makeText(this@AddFamily, "Request sent successfully!", Toast.LENGTH_SHORT).show()
                     } else {
                         val errorResponse = response.errorBody()?.string()

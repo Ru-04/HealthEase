@@ -63,6 +63,7 @@ class NotificationReceiver : BroadcastReceiver() {
                         Log.e("NotificationReceiver", "Error: ${response.errorBody()?.string()}")
                         Toast.makeText(context, "Failed to update access. Please try again.", Toast.LENGTH_LONG).show()
                     }
+
                 }
             } catch (e: Exception) {
                 Log.e("NotificationReceiver", "Exception in API call: ${e.message}")

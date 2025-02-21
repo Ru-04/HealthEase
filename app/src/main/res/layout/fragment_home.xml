@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
-    android:background="@drawable/homeback">
+    android:background="@drawable/background2">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,13 +15,13 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:contentDescription="@string/nav_header_desc"
-                android:paddingTop="15dp"
-                android:src="@drawable/boy" />
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView"-->
+<!--                android:layout_width="70dp"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:contentDescription="@string/nav_header_desc"-->
+<!--                android:paddingTop="15dp"-->
+<!--                android:src="@drawable/boy" />-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -29,8 +29,8 @@
                 android:paddingTop="4dp"
                 android:textSize="25dp"
                 android:text="Hello!!"
-                android:layout_marginLeft="75dp"
-                android:fontFamily="@font/amita_regular"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/inter_variablefont"
                 android:textColor="@color/black"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -39,41 +39,45 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:layout_marginLeft="65dp"
-                android:fontFamily="@font/amita_regular"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/inter_italic"
                 android:textSize="28dp"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:text="Aurora" />
+                android:text="Arushi Sharma!!" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="440dp"
-                android:layout_height="180dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="120dp"
-                android:fontFamily="@font/amita_regular"
-                android:padding="8dp"
-                android:text="Do we meet any Doctors today?"
-                android:textColor="@color/black"
-                android:textSize="30dp"
-                android:textAlignment="center"/>
+<!--            <TextView-->
+<!--                android:id="@+id/textView"-->
+<!--                android:layout_width="440dp"-->
+<!--                android:layout_height="180dp"-->
+<!--                android:layout_marginLeft="25dp"-->
+<!--                android:layout_marginTop="120dp"-->
+<!--                android:fontFamily="@font/amita_regular"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="Do we meet any Doctors today?"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="30dp"-->
+<!--                android:textAlignment="center"/>-->
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/nav_header_desc"
                 android:paddingTop="15dp"
-                android:layout_marginLeft="275dp"
-                android:layout_marginTop="180dp"
+                android:layout_marginLeft="355dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/emoticon" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp">
             <Button
                 android:id="@+id/upload"
                 android:layout_width="150dp"
                 android:layout_height="49dp"
                 android:background="@drawable/strip2"
                 android:layout_marginTop="310dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="20dp"
                 android:text="Upload prescription"
                 android:textSize="11dp"
                 android:fontFamily="@font/inter_variablefont"
@@ -81,10 +85,10 @@
 
             <Button
                 android:id="@+id/medi"
-                android:layout_width="150dp"
+                android:layout_width="160dp"
                 android:layout_height="50dp"
                 android:background="@drawable/strip2"
-                android:layout_marginLeft="230dp"
+                android:layout_marginLeft="210dp"
                 android:layout_marginTop="310dp"
                 android:text="MediVault"
                 android:textColor="@color/black"
@@ -95,7 +99,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="310dp"
-                android:layout_marginLeft="186dp"
+                android:layout_marginLeft="166dp"
                 android:background="@drawable/uploadcircle_trans"
                 android:clickable="true" />
             <ImageView
@@ -103,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/camera"
                 android:layout_marginTop="315dp"
-                android:layout_marginLeft="184dp"/>
+                android:layout_marginLeft="164dp"/>
+            </RelativeLayout>
 
 
             <Button
@@ -111,9 +116,9 @@
                 android:layout_width="400dp"
                 android:layout_height="40dp"
                 android:background="@drawable/strip"
-                android:backgroundTint="@color/purpledim"
-                android:layout_marginTop="390dp"
-                android:layout_marginLeft="25dp"
+                android:backgroundTint="@color/back_purple_dark"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="10dp"
                 android:clickable="true"
                 android:focusable="true"
                 />
@@ -121,9 +126,9 @@
                 android:layout_width="300dp"
                 android:layout_height="48dp"
                 android:hint="Search Doctor/past medical reports"
-                android:textColorHint="@color/black"
+                android:textColorHint="@color/back_purple_dark"
                 android:fontFamily="@font/inter_variablefont"
-                android:layout_marginTop="390dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginLeft="70dp"
                 android:clickable="true"
                 android:paddingTop="12dp"
@@ -135,14 +140,13 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
+                android:layout_marginTop="170dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Speciality"
-                    android:layout_marginTop="460dp"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="20dp"
+                   android:textSize="20dp"
+                   android:layout_marginLeft="20dp"
                     android:fontFamily="@font/amita_bold"
                     android:textColor="@color/black"/>
                 <HorizontalScrollView
@@ -152,12 +156,12 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginTop="40dp">
                         <LinearLayout
                             android:layout_width="100dp"
                             android:layout_height="120dp"
                             android:background="@drawable/specback"
-                            android:layout_marginTop="510dp"
                             android:layout_marginLeft="15dp"
                             android:orientation="vertical">
                             <ImageView
@@ -181,7 +185,6 @@
                             android:layout_width="100dp"
                             android:layout_height="120dp"
                             android:background="@drawable/specback"
-                            android:layout_marginTop="510dp"
                             android:layout_marginLeft="15dp"
                             android:orientation="vertical">
                             <ImageView
@@ -205,7 +208,6 @@
                             android:layout_width="100dp"
                             android:layout_height="120dp"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginTop="510dp"
                             android:background="@drawable/specback"
                             android:orientation="vertical">
 
@@ -230,7 +232,6 @@
                             android:layout_width="100dp"
                             android:layout_height="120dp"
                             android:background="@drawable/specback"
-                            android:layout_marginTop="510dp"
                             android:layout_marginLeft="15dp"
                             android:orientation="vertical">
                             <ImageView
@@ -253,7 +254,6 @@
                             android:layout_width="100dp"
                             android:layout_height="120dp"
                             android:background="@drawable/specback"
-                            android:layout_marginTop="510dp"
                             android:layout_marginLeft="15dp"
                             android:orientation="vertical">
                             <ImageView
@@ -295,77 +295,34 @@
                 android:background="@drawable/addfamily"/>
 
             <RelativeLayout
+                android:id="@+id/add_family"
                 android:layout_width="380dp"
                 android:layout_height="160dp"
-                android:background="@drawable/buttonbg"
-                android:backgroundTint="@color/my_color"
+                android:background="@drawable/nav_background"
                 android:layout_marginTop="710dp"
                 android:layout_marginLeft="17dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/images"
-                android:layout_marginTop="730dp"
-                android:layout_marginLeft="40dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Eliot"
-                android:layout_marginTop="710dp"
-                android:textSize="30dp"
-                android:layout_marginLeft="125dp"
-                android:fontFamily="@font/amiriregular"
-                android:textColor="@color/black"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="daughter"
-                android:layout_marginTop="760dp"
-                android:textSize="20dp"
-                android:layout_marginLeft="125dp"
-                android:fontFamily="@font/amiriregular"
-                android:textColor="@color/black"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15 yr"
-                android:layout_marginTop="760dp"
-                android:textSize="20dp"
-                android:layout_marginLeft="235dp"
-                android:fontFamily="@font/amiriregular"
-                android:textColor="@color/black"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="O+"
-                android:layout_marginTop="760dp"
-                android:textSize="20dp"
-                android:layout_marginLeft="320dp"
-                android:fontFamily="@font/amiriregular"
-                android:textColor="@color/black"/>
-            <SearchView
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:background="@color/white"
-                android:layout_marginTop="820dp"
-                android:layout_marginLeft="60dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No medical record found"
-                android:textColor="@color/black60"
-                android:layout_marginTop="830dp"
-                android:fontFamily="@font/inter_variablefont"
-                android:textColorHint="@color/my_color"
-                android:layout_marginLeft="110dp"
-                />
+                <TextView
+                    android:id="@+id/no_family_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="No family member added!!"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+                <!-- RecyclerView for displaying family members dynamically -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/familyRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:padding="10dp"/>
+
+            </RelativeLayout>
+
         </RelativeLayout>
     </ScrollView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </RelativeLayout>
