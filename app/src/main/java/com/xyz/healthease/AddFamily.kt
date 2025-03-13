@@ -1,5 +1,6 @@
 package com.xyz.healthease
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -7,8 +8,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xyz.healthease.api.ApiClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 import retrofit2.Call
@@ -21,7 +27,6 @@ class AddFamily : AppCompatActivity() {
     private lateinit var send: Button
     private lateinit var apiService: ApiService
 
-   // private lateinit var socket: Socket  // Declare socket object
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,47 +44,42 @@ class AddFamily : AppCompatActivity() {
             val familyMemberId = memberId.text.toString().trim()
             val relationText = relation.text.toString().trim()
 
-            val request = AddFamilyRequest(
-                patient_id = patientId!!,
-                family_id = familyMemberId,
-                relation = relationText
-            )
-            Log.d("AddFamily", "User Input - Family Member ID: $familyMemberId, Relation: $relationText")
-
             if (patientId != null && familyMemberId.isNotEmpty() && relationText.isNotEmpty()) {
-                Log.d("AddFamily", "Sending family request")
-                //sendSocketNotification(patientId, familyMemberId, relationText)
+                Log.d("AddFamily", "Sending request: PatientID=$patientId, FamilyID=$familyMemberId, Relation=$relationText")
+
+                val request = AddFamilyRequest(
+                    patient_id = patientId,
+                    family_id = familyMemberId,
+                    relation = relationText
+                )
+
+                // Call API to add family member
+                apiService.familyMember(request).enqueue(object : Callback<Map<String, Any>> {
+                    override fun onResponse(call: Call<Map<String, Any>>, response: Response<Map<String, Any>>) {
+                        if (response.isSuccessful) {
+                            sharedPreferences.edit()
+                                .putString("FAMILY_ID", familyMemberId)
+                                .apply()
+
+                        } else {
+                            val errorResponse = response.errorBody()?.string()
+                            Log.e("AddFamily", "Error response: $errorResponse")
+                            Toast.makeText(this@AddFamily, "Failed to send request", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Map<String, Any>>, t: Throwable) {
+                        Log.e("AddFamily", "Network error: ${t.message}")
+                        Toast.makeText(this@AddFamily, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
             } else {
                 Log.d("AddFamily", "Validation failed: Empty fields")
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
-            apiService.familyMember(request).enqueue(object : Callback<Map<String, Any>> {
-                override fun onResponse(call: Call<Map<String, Any>>, response: Response<Map<String, Any>>) {
-                    if (response.isSuccessful) {
-                        sharedPreferences.edit()
-                            .putString("FAMILY_ID", familyMemberId)
-                            .apply()
-
-                        val resultIntent = Intent()
-                        resultIntent.putExtra("FAMILY_NAME", familyMemberId)  // Pass name or ID
-                        resultIntent.putExtra("FAMILY_RELATION", relationText)
-                        setResult(RESULT_OK, resultIntent)
-
-                        Toast.makeText(this@AddFamily, "Request sent successfully!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        val errorResponse = response.errorBody()?.string()
-                        Log.e("AddFamily", "Error response: $errorResponse")
-                        Toast.makeText(this@AddFamily, "Failed to send request", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<Map<String, Any>>, t: Throwable) {
-                    Log.e("AddFamily", "Network error: ${t.message}")
-                    Toast.makeText(this@AddFamily, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                }
-            })
         }
     }
+
 
 
     override fun onDestroy() {

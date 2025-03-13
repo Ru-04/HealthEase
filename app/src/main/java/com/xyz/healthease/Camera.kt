@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -27,14 +28,15 @@ import com.xyz.healthease.api.ApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.tensorflow.lite.Interpreter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 import java.text.SimpleDateFormat
@@ -51,13 +53,18 @@ class camera : AppCompatActivity() {
     private lateinit var classifiedResult: TextView
     private lateinit var upload: Button
 
+
+    private lateinit var doctorName: TextView
+    private lateinit var hospitalName: TextView
+    private lateinit var button: Button
+
     private var currentPhotoPath: String? = null
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
 
     private lateinit var interpreter: Interpreter
     private lateinit var vocab: Map<String, Int>
-    private lateinit var labelMapping: Map<Int, String>
+    private lateinit var labels: List<String>
 
     private val apiService: ApiService by lazy { ApiClient.getApiService() }
 
@@ -67,17 +74,23 @@ class camera : AppCompatActivity() {
         cameraImage = findViewById(R.id.cameraImage)
         captureImgBtn = findViewById(R.id.captureImgBtn)
         resultText = findViewById(R.id.resultText)
+
         processBtn = findViewById(R.id.processBtn)
         classifiedResult = findViewById(R.id.classifiedResult)
         upload = findViewById(R.id.upload2)
 
+
+        button=findViewById(R.id.buttonExtract)
+        doctorName=findViewById(R.id.doctorNameText)
+        hospitalName=findViewById(R.id.hospitalNameText)
+
         upload.visibility = View.VISIBLE
 
         // Initialize model and vocab
-        val modelPath = "model_compatible.tflite"
+        val modelPath = "model_main.tflite"
         interpreter = Interpreter(loadModel(this, modelPath))
-        loadWordIndex()
-        loadLabelMap()
+        loadVocab()
+        loadLabels()
         val sharedPreferences = getSharedPreferences("HealthEasePrefs", MODE_PRIVATE)
 
         // Permissions and image capture setup
@@ -110,6 +123,10 @@ class camera : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "No text available for classification", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        button.setOnClickListener {
+            sendTextToModel(resultText.text.toString())
         }
 
         upload.setOnClickListener {
@@ -155,6 +172,8 @@ class camera : AppCompatActivity() {
 
         recognizer.process(image).addOnSuccessListener { ocrText ->
             resultText.text = ocrText.text
+            resultText.movementMethod = ScrollingMovementMethod()
+
             Toast.makeText(this, "Text recognized successfully", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener { e ->
             Toast.makeText(this, "Failed to recognize text: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -162,98 +181,174 @@ class camera : AppCompatActivity() {
     }
 
     private fun classifyText(text: String) {
-        val input = preprocessText(text, maxLength = 100)
-        val output = Array(1) { FloatArray(labelMapping.size) }
-        interpreter.run(arrayOf(input), output)
-        val maxIndex = output[0].indices.maxByOrNull { output[0][it] } ?: -1
-        val category = labelMapping[maxIndex] ?: "Unknown"
-        classifiedResult.text = "Classification Result:\n$category"
-    }
-//
-//    private fun uploadImage(file: File, patientId: String) {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            try {
-//                val filePart = MultipartBody.Part.createFormData(
-//                    "file",
-//                    file.name,
-//                    file.asRequestBody("image/*".toMediaTypeOrNull())
-//                )
-//                val patientIdPart = patientId.toRequestBody("text/plain".toMediaTypeOrNull())
-//                val response = ApiClient.getApiService().uploadImage(filePart, patientIdPart)
-//                runOnUiThread {
-//                    if (response.containsKey("message")) {
-//                        Toast.makeText(this@camera, response["message"].toString(), Toast.LENGTH_SHORT).show()
-//                    } else {
-//                        Toast.makeText(this@camera, "Unexpected response: $response", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                runOnUiThread {
-//                    Toast.makeText(this@camera, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
-    private fun uploadImageToCloudinary(imageFile: File) {
-    val cloudinary = Cloudinary(
-        ObjectUtils.asMap(
-            "cloud_name", "dkrspzrhj",
-            "api_key", "263152711571172",
-            "api_secret", "hbn_y81gadRKr9LnOjmjhiHVieY"
-        )
-    )
+        val inputVector = preprocessText(text)
+        val inputBuffer = ByteBuffer.allocateDirect(inputVector.size * 4).order(ByteOrder.nativeOrder())
+        inputVector.forEach { inputBuffer.putFloat(it) }
 
-    Executors.newSingleThreadExecutor().execute {
-            try {
-                val result = cloudinary.uploader().upload(imageFile, ObjectUtils.emptyMap())
-                val imageUrl = result["secure_url"] as String
-                runOnUiThread {
-                    Toast.makeText(this@camera, "Image Uploaded: $imageUrl", Toast.LENGTH_SHORT).show()
-                    Glide.with(this@camera).load(imageUrl).into(cameraImage)
-                        // Send the image URL to Node.js backend
-                       // sendImageUrlToBackend(imageUrl)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                runOnUiThread {
-                    Toast.makeText(this@camera, "Upload Failed: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
+        val outputBuffer = ByteBuffer.allocateDirect(labels.size * 4).order(ByteOrder.nativeOrder())
+        interpreter.run(inputBuffer, outputBuffer)
+
+        val outputArray = FloatArray(labels.size)
+        outputBuffer.rewind()
+        for (i in outputArray.indices) {
+            outputArray[i] = outputBuffer.float
+        }
+
+        val maxIndex = outputArray.indices.maxByOrNull { outputArray[it] } ?: -1
+        val predictedLabel = if (maxIndex >= 0) labels[maxIndex] else "Unknown"
+        classifiedResult.text = "Classification Result: \n$predictedLabel"
+    }
+
+
+    private fun preprocessText(text: String): FloatArray {
+        val tokens = text.lowercase().split(Regex("\\s+")).map { it.replace(Regex("[^a-z0-9]"), "") }
+        val featureVector = FloatArray(1000) { 0f }
+
+        for (token in tokens) {
+            val index = vocab[token]
+            if (index != null && index < 1000) {
+                featureVector[index] += 1f
             }
         }
-    }
-
-
-    private fun preprocessText(text: String, maxLength: Int = 100): FloatArray {
-        val tokens = text.lowercase().split("\\s+".toRegex())
-        val indices = tokens.map { vocab[it] ?: 1 }
-        val paddedIndices = if (indices.size >= maxLength) {
-            indices.take(maxLength)
-        } else {
-            indices + List(maxLength - indices.size) { 0 }
-        }
-        return paddedIndices.map { it.toFloat() }.toFloatArray()
+        return featureVector
     }
 
     private fun loadModel(context: Context, modelPath: String): MappedByteBuffer {
         val fileDescriptor = assets.openFd(modelPath)
         FileInputStream(fileDescriptor.fileDescriptor).use { inputStream ->
             val fileChannel = inputStream.channel
-            val startOffset = fileDescriptor.startOffset
-            val declaredLength = fileDescriptor.declaredLength
-            return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+            return fileChannel.map(FileChannel.MapMode.READ_ONLY, fileDescriptor.startOffset, fileDescriptor.declaredLength)
         }
     }
 
-    private fun loadWordIndex() {
-        val wordIndexJson = assets.open("word_index (1).json").bufferedReader().use { it.readText() }
-        vocab = Gson().fromJson(wordIndexJson, object : TypeToken<Map<String, Int>>() {}.type)
+    private fun loadVocab() {
+        val vocabJson = assets.open("tfidf_vocab.json").bufferedReader().use { it.readText() }
+
+        // Parse the entire JSON object
+        val fullJson: Map<String, Any> = Gson().fromJson(vocabJson, object : TypeToken<Map<String, Any>>() {}.type)
+
+        // Extract "vocab" safely and convert to Map<String, Int>
+        val extractedVocab = (fullJson["vocab"] as? Map<String, Number>) ?: emptyMap()
+        vocab = extractedVocab.mapValues { it.value.toInt() }  // Ensure conversion to Int
+
+        // Extract "idf" safely (if needed) and convert to List<Float>
+        val extractedIdf = (fullJson["idf"] as? List<Number>)?.map { it.toFloat() } ?: emptyList()
     }
 
-    private fun loadLabelMap() {
-        val labelMapJson = assets.open("label_map (1).json").bufferedReader().use { it.readText() }
-        labelMapping = Gson().fromJson<Map<String, String>>(labelMapJson, object : TypeToken<Map<String, String>>() {}.type).mapKeys { it.key.toInt() }
+    private fun loadLabels() {
+        val labelsJson = assets.open("labels.json").bufferedReader().use { it.readText() }
+        labels = Gson().fromJson(labelsJson, object : TypeToken<List<String>>() {}.type)
     }
+
+    private fun sendTextToModel(text: String) {
+        if (text.isEmpty()) {
+            Toast.makeText(this, "No extracted text available", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val request = TextRequest(text)
+        RetrofitClient.instance.extractTextDetails(request)
+            .enqueue(object : Callback<TextExtractionResponse> {
+                override fun onResponse(
+                    call: Call<TextExtractionResponse>,
+                    response: Response<TextExtractionResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val doctorNames = response.body()?.doctor_names?.joinToString(", ") ?: "Not Found"
+                        val hospitalNames = response.body()?.hospital_names?.joinToString(", ") ?: "Not Found"
+                        doctorName.text =  "Doctor: $doctorNames"
+                        hospitalName.text = "Hospital: $hospitalNames"
+                    } else {
+                        doctorName.text = "Error: ${response.message()}"
+                        hospitalName.text = "Error: ${response.message()}"
+                    }
+                }
+
+
+                override fun onFailure(call: Call<TextExtractionResponse>, t: Throwable) {
+                    doctorName.text = "Failed: ${t.message}"
+                    hospitalName.text = "Failed: ${t.message}"
+                }
+            })
+    }
+
+    private fun uploadImageToCloudinary(imageFile: File) {
+        val cloudinary = Cloudinary(
+            ObjectUtils.asMap(
+                "cloud_name", "dkrspzrhj",
+                "api_key", "263152711571172",
+                "api_secret", "hbn_y81gadRKr9LnOjmjhiHVieY"
+            )
+        )
+
+        Executors.newSingleThreadExecutor().execute {
+            try {
+                val result = cloudinary.uploader().upload(imageFile, ObjectUtils.emptyMap())
+                runOnUiThread {
+                    // Debugging - Print the whole result to see its structure
+                    println("Cloudinary Response: $result")
+                    Toast.makeText(this@camera, "Response: $result", Toast.LENGTH_LONG).show()
+
+                    // Check if secure_url exists and retrieve it
+                    val imageUrl = result["secure_url"] as? String
+                    val publicId = result["public_id"] as? String
+
+                    if (imageUrl != null && publicId != null) {
+                        Toast.makeText(this@camera, "Image Uploaded: $imageUrl", Toast.LENGTH_SHORT).show()
+                        Glide.with(this@camera).load(imageUrl).into(cameraImage)
+
+                        // Get Patient ID
+                        val sharedPreferences = getSharedPreferences("HealthEasePrefs", MODE_PRIVATE)
+                        val patientId = sharedPreferences.getString("PATIENT_ID", null)
+
+                        if (patientId != null) {
+                            // Send to MongoDB
+                            uploadReportToMongoDB(patientId, publicId, imageUrl)
+                        } else {
+                            Toast.makeText(this@camera, "Patient ID is missing", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this@camera, "Image URL or Public ID not found in response", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(this@camera, "Upload Failed: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+
+    private fun uploadReportToMongoDB(patientId: String, publicId: String, imageUrl: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val reportData = mapOf(
+                    "patientId" to patientId,
+                    "publicId" to publicId,
+                    "imageUrl" to imageUrl,
+                    "reportCategory" to classifiedResult.text.toString().replace("Classification Result: \n", ""), // Extracting classification result
+                    "hospitalName" to hospitalName.text.toString().replace("Hospital: ", ""), // Extracting hospital name
+                    "doctorName" to doctorName.text.toString().replace("Doctor: ", "") // Extracting doctor name
+                )
+
+                // Call the API and get the response as a Map
+                val response = apiService.uploadReport(reportData)
+
+                runOnUiThread {
+                    val message = response["message"]?.toString() ?: "Report uploaded successfully"
+                    Toast.makeText(this@camera, message, Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(this@camera, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

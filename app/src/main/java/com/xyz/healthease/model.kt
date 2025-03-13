@@ -23,7 +23,8 @@ data class Doctor(
     val qualification: String,
     val specialization: String,
     val affiliatedInstitutions: String,
-    val year_of_experience: Int
+    val year_of_experience: Int,
+    val fcm_token: String
 )
 // Request body for OTP generation
 data class PhoneRequest(
@@ -46,20 +47,14 @@ data class DoctorS(
     val Specialization: String)
 
 data class Hospital(
-    @SerializedName("Hospital_ID") val hospitalId: String, // ObjectId in MongoDB
-    @SerializedName("Admin_ID") val adminId: String?, // ObjectId in MongoDB
-    @SerializedName("License_No") val licenseNo: String,
-    @SerializedName("Hospital_Name") val hospitalName: String,
-    @SerializedName("Certification") val certification: String,
-    @SerializedName("Address") val address: String,
-    @SerializedName("Contact_No") val contactNo: String,
-    @SerializedName("Email") val email: String,
-    @SerializedName("Capacity") val capacity: Int,
-    @SerializedName("Date_Of_Establish") val dateOfEstablish: String,
-    @SerializedName("Medical_Services") val medicalServices: List<String> = emptyList(),
-//    @SerializedName("Departments") val departments: List<Department> = emptyList(),
-//    @SerializedName("permissions") val permissions: List<Permission> = emptyList(),
-//    @SerializedName("audit_logs") val auditLogs: List<AuditLog> = emptyList()
+    val License_No: String,
+    val Hospital_Name: String,
+    val Address: String,
+    val Contact_No: String,
+    val Email: String,
+    val Capacity: Int,
+    val Date_Of_Establish: String,
+    val Fcm_token: String
 )
 data class RegistrationResponse(
     val message: String,

@@ -6,6 +6,7 @@ import com.xyz.healthease.otp.GenerateOTP
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.xyz.healthease.R
@@ -38,6 +39,8 @@ class SigningAs : AppCompatActivity() {
     }
 
     private fun navigateToLogin(role: String) {
+        Log.d("SigningAs", "Selected role: $role") // Log the role
+
         val intent = Intent(this@SigningAs, GenerateOTP::class.java)
         intent.putExtra("role", role) // Pass the role to LoginActivity
         startActivity(intent)

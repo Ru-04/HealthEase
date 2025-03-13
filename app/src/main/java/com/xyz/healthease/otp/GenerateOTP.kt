@@ -2,6 +2,7 @@ package com.xyz.healthease.otp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -24,6 +25,7 @@ class GenerateOTP : AppCompatActivity() {
     private lateinit var phoneEditText: EditText
     private lateinit var progressBar: ProgressBar
     private lateinit var apiService: ApiService
+    private var role: String? = null  // Store role at class level
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,9 @@ class GenerateOTP : AppCompatActivity() {
 
         progressBar.visibility = View.GONE
         countryCodePicker.registerCarrierNumberEditText(phoneEditText)
+
+        role = intent.getStringExtra("role")
+        Log.d("GenerateOTP", "Received role: $role")
 
         // Initialize the API service
         apiService = ApiClient.getApiService()
@@ -62,7 +67,7 @@ class GenerateOTP : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
         generateButton.isEnabled = false
 
-        val request = ApiService.PhoneRequest(phone)
+        val request = ApiService.PhoneRequest(phone, role)
         val call = apiService.sendOtp(request)
 
         call.enqueue(object : Callback<ApiService.ApiResponse> {
@@ -80,6 +85,7 @@ class GenerateOTP : AppCompatActivity() {
                     // Navigate to EnterOTP activity
                     val intent = Intent(this@GenerateOTP, EnterOtp::class.java)
                     intent.putExtra("phone", phone)
+                    intent.putExtra("role", role) // Forward role
                     startActivity(intent)
                 } else {
                     showToast("Failed to send OTP. Please try again.")

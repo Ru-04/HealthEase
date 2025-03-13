@@ -294,33 +294,17 @@
                 android:layout_marginLeft="130dp"
                 android:background="@drawable/addfamily"/>
 
-            <RelativeLayout
-                android:id="@+id/add_family"
-                android:layout_width="380dp"
-                android:layout_height="160dp"
-                android:background="@drawable/nav_background"
-                android:layout_marginTop="710dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginBottom="10dp">
+            <Button
+                android:id="@+id/manage_family"
+                android:layout_width="150dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="700dp"
+                android:layout_marginLeft="50dp"
+                android:text="Family Member List"
+                android:background="@drawable/buttonbg"/>
 
-                <TextView
-                    android:id="@+id/no_family_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="No family member added!!"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
 
-                <!-- RecyclerView for displaying family members dynamically -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/familyRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
-                    android:padding="10dp"/>
 
-            </RelativeLayout>
 
         </RelativeLayout>
     </ScrollView>
